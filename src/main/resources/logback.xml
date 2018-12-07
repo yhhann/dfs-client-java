@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <contextName>DfsClient</contextName>
+  <property name="logs.path" value="logs" />
+  <!--appender 模块-->
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <layout class="ch.qos.logback.classic.PatternLayout">
+      <pattern>%d{HH:mm:ss.SSS} %-5p [%t] %c:%L - %m%n</pattern>
+    </layout>
+    <target>System.out</target>
+  </appender>
+  <appender name="DFS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${logs.path}/dfs.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>dfs.%d{yyyy-MM-dd}.log</fileNamePattern>
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+    <encoder charset="UTF-8">
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t] %c:%L - %m%n</pattern>
+    </encoder>
+  </appender>
+  <appender name="METRICS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${logs.path}/metrics.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>metrics.%d{yyyy-MM-dd}.log</fileNamePattern>
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+    <encoder charset="UTF-8">
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t] %c:%L - %m%n</pattern>
+    </encoder>
+  </appender>
+  <!--logger 模块-->
+  <logger name="com.jingoal.dfsclient" level="INFO" additivity="false">
+    <appender-ref ref="DFS" />
+  </logger>
+  <logger name="metrics" level="INFO" additivity="false">
+    <appender-ref ref="METRICS" />
+  </logger>
+  <root level="INFO">
+    <appender-ref ref="STDOUT" />
+  </root>
+</configuration>
